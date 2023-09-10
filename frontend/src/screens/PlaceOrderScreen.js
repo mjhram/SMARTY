@@ -42,8 +42,8 @@ export default function PlaceOrderScreen() {
   cart.itemsPrice = round2(
     cart.cartItems.reduce((a, c) => a + c.quantity * c.price, 0)
   );
-  cart.shippingPrice = cart.itemsPrice > 100 ? round2(0) : round2(10);
-  cart.taxPrice = round2(0.15 * cart.itemsPrice);
+  cart.shippingPrice = 5000;//cart.itemsPrice > 100 ? round2(0) : round2(10);
+  cart.taxPrice = 0;//round2(0.15 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
   const placeOrderHandler = async () => {
@@ -94,7 +94,7 @@ export default function PlaceOrderScreen() {
         <Col md={8}>
           <Card className="mb-3">
             <Card.Body>
-              <Card.Title><Trans>Shipping Address</Trans></Card.Title>
+              <Card.Title><Trans>Delivery Address</Trans></Card.Title>
               <Card.Text>
                 <strong><Trans>Name</Trans>:</strong> {cart.shippingAddress.fullName} <br />
                 <strong><Trans>Address</Trans>: </strong> {cart.shippingAddress.address},
@@ -155,16 +155,18 @@ export default function PlaceOrderScreen() {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col><Trans>Shipping</Trans></Col>
-                    <Col>{cart.shippingPrice.toFixed(2)}<Trans>IqD</Trans></Col>
+                    <Col><Trans>Delivery Fee</Trans></Col>
+                    <Col>{cart.shippingPrice.toFixed(0)}<Trans>IqD</Trans></Col>
                   </Row>
                 </ListGroup.Item>
-                <ListGroup.Item>
+                {cart.taxPrice != 0 &&
+                  <ListGroup.Item>
                   <Row>
                     <Col><Trans>Tax</Trans></Col>
                     <Col>{cart.taxPrice.toFixed(2)}<Trans>IqD</Trans></Col>
                   </Row>
                 </ListGroup.Item>
+                }
                 <ListGroup.Item>
                   <Row>
                     <Col>

@@ -17,11 +17,11 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     shippingAddress: {
-      fullName: { type: String, required: true },
+      fullName: { type: String, required: false },
       address: { type: String, required: true },
       city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      postalCode: { type: String, required: false },
+      country: { type: String, required: false },
       location: {
         lat: Number,
         lng: Number,

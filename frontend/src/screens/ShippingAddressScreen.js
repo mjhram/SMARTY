@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../Store';
 import CheckoutSteps from '../components/CheckoutSteps';
@@ -10,6 +12,7 @@ import { useTranslation, Trans } from 'react-i18next';
 export default function ShippingAddressScreen() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const cities = ["Baghdad"];
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const {
@@ -70,7 +73,7 @@ export default function ShippingAddressScreen() {
       <div className="container small-container">
         <h1 className="my-3"><Trans>Shipping Address</Trans></h1>
         <Form onSubmit={submitHandler}>
-          <Form.Group className="mb-3" controlId="fullName">
+        <Form.Group className="mb-3" controlId="fullName">
             <Form.Label><Trans>Full Name</Trans></Form.Label>
             <Form.Control
               value={fullName}
@@ -81,6 +84,8 @@ export default function ShippingAddressScreen() {
           <Form.Group className="mb-3" controlId="address">
             <Form.Label><Trans>Address</Trans></Form.Label>
             <Form.Control
+              as="textarea"
+              rows={3}
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
@@ -88,27 +93,20 @@ export default function ShippingAddressScreen() {
           </Form.Group>
           <Form.Group className="mb-3" controlId="city">
             <Form.Label><Trans>City</Trans></Form.Label>
-            <Form.Control
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="postalCode">
-            <Form.Label><Trans>Postal Code</Trans></Form.Label>
-            <Form.Control
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="country">
-            <Form.Label><Trans>Country</Trans></Form.Label>
-            <Form.Control
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              required
-            />
+            
+            <Form.Select id="dropdown-basic-button" title="Choose City" 
+               style={
+                document.body.dir=='rtl'? 
+                {backgroundPosition: 'left 1rem center'
+                }:
+                {
+                }
+              }
+              value={city} onChange={(e: any) => setCity(e.currentTarget.value)}>
+              {cities.map(acity => {
+                return <option href="#">{acity}</option>
+              })}
+            </Form.Select>
           </Form.Group>
           <div className="mb-3">
             <Button
